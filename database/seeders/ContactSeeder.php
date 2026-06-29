@@ -15,14 +15,15 @@ class ContactSeeder extends Seeder
     public function run(): void
     {
         // Inserting a walk-in customer record
-        Contact::create([
-            'name' => 'Guest',     // Name of the walk-in customer
-            'email' => null,                // Email is null for walk-in customers
-            'phone' => null,                // Phone is null for walk-in customers
-            'address' => null,              // Address is null for walk-in customers
-            'balance' => 0.00,              // Default balance
-            'loyalty_points' => null,       // No loyalty points for walk-in customers
-            'type' => 'customer',              // Type set to 'guest'
-        ]);
+        Contact::firstOrCreate(
+            ['name' => 'Guest', 'type' => 'customer'],
+            [
+                'email' => null,
+                'phone' => null,
+                'address' => null,
+                'balance' => 0.00,
+                'loyalty_points' => null,
+            ]
+        );
     }
 }

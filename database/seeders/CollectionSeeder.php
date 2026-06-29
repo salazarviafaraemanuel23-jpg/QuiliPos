@@ -20,12 +20,13 @@ class CollectionSeeder extends Seeder
         ];
 
         foreach ($categories as $cat) {
-            Collection::create([
-                'collection_type' => 'category',
-                'name'            => $cat['name'],
-                'slug'            => Str::slug($cat['name']),
-                'description'     => $cat['description'],
-            ]);
+            Collection::firstOrCreate(
+                ['collection_type' => 'category', 'slug' => Str::slug($cat['name'])],
+                [
+                    'name'        => $cat['name'],
+                    'description' => $cat['description'],
+                ]
+            );
         }
 
         $brands = [
@@ -38,12 +39,13 @@ class CollectionSeeder extends Seeder
         ];
 
         foreach ($brands as $brand) {
-            Collection::create([
-                'collection_type' => 'brand',
-                'name'            => $brand['name'],
-                'slug'            => Str::slug($brand['name']),
-                'description'     => $brand['description'],
-            ]);
+            Collection::firstOrCreate(
+                ['collection_type' => 'brand', 'slug' => Str::slug($brand['name'])],
+                [
+                    'name'        => $brand['name'],
+                    'description' => $brand['description'],
+                ]
+            );
         }
 
         $tags = [
@@ -54,12 +56,13 @@ class CollectionSeeder extends Seeder
         ];
 
         foreach ($tags as $tag) {
-            Collection::create([
-                'collection_type' => 'tag',
-                'name'            => $tag['name'],
-                'slug'            => Str::slug($tag['name']),
-                'description'     => $tag['description'],
-            ]);
+            Collection::firstOrCreate(
+                ['collection_type' => 'tag', 'slug' => Str::slug($tag['name'])],
+                [
+                    'name'        => $tag['name'],
+                    'description' => $tag['description'],
+                ]
+            );
         }
     }
 }

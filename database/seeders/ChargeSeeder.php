@@ -40,7 +40,10 @@ class ChargeSeeder extends Seeder
         ];
 
         foreach ($charges as $charge) {
-            Charge::create($charge);
+            Charge::updateOrCreate(
+                ['name' => $charge['name'], 'charge_type' => $charge['charge_type']],
+                $charge
+            );
         }
     }
 }

@@ -115,6 +115,11 @@ class SettingSeeder extends Seeder
             ])],
         ];
 
-        Setting::insert($settings);
+        foreach ($settings as $setting) {
+            Setting::updateOrCreate(
+                ['meta_key' => $setting['meta_key']],
+                ['meta_value' => $setting['meta_value']]
+            );
+        }
     }
 }
