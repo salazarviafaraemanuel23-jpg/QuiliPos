@@ -2,23 +2,61 @@
 
 use Illuminate\Support\Str;
 
-$databaseUrl = env('DATABASE_URL', env('DB_URL'));
+/**
+ * Parse DATABASE_URL into discrete fields. We intentionally avoid passing the
+ * raw URL to Laravel because libpq "options=endpoint=..." query params would
+ * overwrite PDO connection options and break array_diff_key in the connector.
+ */
+$pgsqlFromUrl = (function (): array {
+    $databaseUrl = env('DATABASE_URL', env('DB_URL'));
 
-if ($databaseUrl && str_contains($databaseUrl, 'neon.tech') && ! str_contains($databaseUrl, 'endpoint%3D') && ! str_contains($databaseUrl, 'endpoint=')) {
-    $host = parse_url(str_replace('postgresql://', 'postgres://', $databaseUrl), PHP_URL_HOST) ?? '';
-
-    if ($host === '' && preg_match('#@([^/?]+)#', $databaseUrl, $matches)) {
-        $host = $matches[1];
+    if (! $databaseUrl) {
+        return [];
     }
 
-    $endpointId = explode('.', $host)[0] ?? '';
-    $endpointId = preg_replace('/-pooler$/', '', $endpointId);
+    $normalized = str_replace('postgresql://', 'postgres://', $databaseUrl);
+    $parsed = parse_url($normalized);
 
-    if ($endpointId !== '') {
-        $separator = str_contains($databaseUrl, '?') ? '&' : '?';
-        $databaseUrl .= $separator.'options=endpoint%3D'.rawurlencode($endpointId);
+    if ($parsed === false) {
+        return [];
     }
-}
+
+    parse_str($parsed['query'] ?? '', $query);
+
+    $host = $parsed['host'] ?? null;
+    $port = $parsed['port'] ?? null;
+    $database = isset($parsed['path']) && $parsed['path'] !== '/'
+        ? ltrim($parsed['path'], '/')
+        : null;
+    $username = isset($parsed['user']) ? rawurldecode($parsed['user']) : null;
+    $password = isset($parsed['pass']) ? rawurldecode($parsed['pass']) : null;
+    $sslmode = $query['sslmode'] ?? null;
+
+    $neonEndpoint = null;
+
+    if (isset($query['options'])) {
+        $libpqOptions = rawurldecode((string) $query['options']);
+
+        if (preg_match('/endpoint[=]([^&]+)/', $libpqOptions, $matches)) {
+            $neonEndpoint = $matches[1];
+        }
+    }
+
+    if ($neonEndpoint === null && $host !== null && str_contains($host, 'neon.tech')) {
+        $endpointId = explode('.', $host)[0] ?? '';
+        $neonEndpoint = preg_replace('/-pooler$/', '', $endpointId) ?: null;
+    }
+
+    return array_filter([
+        'host' => $host,
+        'port' => $port,
+        'database' => $database,
+        'username' => $username,
+        'password' => $password,
+        'sslmode' => $sslmode,
+        'neon_endpoint' => $neonEndpoint,
+    ], fn ($value) => $value !== null && $value !== '');
+})();
 
 return [
 
@@ -83,9 +121,8 @@ return [
             'options' => [],
         ],
 
-        'pgsql' => [
+        'pgsql' => array_merge([
             'driver' => 'pgsql',
-            'url' => $databaseUrl,
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'laravel'),
@@ -97,10 +134,9 @@ return [
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'require'),
             'options' => extension_loaded('pdo_pgsql') ? array_filter([
-                // Neon pooler + serverless PHP: disable native prepares for compatibility
                 PDO::ATTR_EMULATE_PREPARES => true,
             ]) : [],
-        ],
+        ], $pgsqlFromUrl),
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
