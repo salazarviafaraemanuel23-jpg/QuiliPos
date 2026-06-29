@@ -98,14 +98,14 @@ function TabPanel(props) {
 export default function Setting({ settings }) {
     const [settingFormData, setSettingFormData] = useState(() => {
         let currencySettings = {
-            currency_symbol: 'Rs.',
-            currency_code: 'LKR',
+            currency_symbol: '$',
+            currency_code: 'COP',
             symbol_position: 'before',
-            decimal_separator: '.',
-            thousands_separator: ',',
-            decimal_places: '2',
-            negative_format: 'minus',
-            show_currency_code: 'no',
+            decimal_separator: ',',
+            thousands_separator: '.',
+            decimal_places: '0',
+            negative_format: '-$1',
+            show_currency_code: 'yes',
         };
 
         if (settings.currency_settings) {

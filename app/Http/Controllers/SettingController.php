@@ -16,7 +16,7 @@ class SettingController extends Controller
 
         $settings = Setting::all();
         $settingArray = $settings->pluck('meta_value', 'meta_key')->all();
-        $settingArray['shop_logo'] = $imageUrl . $settingArray['shop_logo'];
+        $settingArray['shop_logo'] = $imageUrl . ($settingArray['shop_logo'] ?? '');
         $settingArray['tinymce'] = asset('tinymce/tinymce.min.js');
         // Render the 'Settings' component with data
         return Inertia::render('Settings/Settings', [
@@ -33,7 +33,7 @@ class SettingController extends Controller
 
         $settings = Setting::all();
         $settingArray = $settings->pluck('meta_value', 'meta_key')->all();
-        $settingArray['shop_logo'] = $imageUrl . $settingArray['shop_logo'];
+        $settingArray['shop_logo'] = $imageUrl . ($settingArray['shop_logo'] ?? '');
         $sale = \App\Models\Sale::select(
             'sales.id',
             'contact_id',            // Customer ID
@@ -94,7 +94,7 @@ class SettingController extends Controller
 
         $settings = Setting::all();
         $settingArray = $settings->pluck('meta_value', 'meta_key')->all();
-        $settingArray['shop_logo'] = $imageUrl . $settingArray['shop_logo'];
+        $settingArray['shop_logo'] = $imageUrl . ($settingArray['shop_logo'] ?? '');
         $sale = \App\Models\Sale::select(
             'sales.id',
             'contact_id',            // Customer ID
@@ -160,7 +160,7 @@ class SettingController extends Controller
             'shop_logo',
         ])->get();
         $settingArray = $settings->pluck('meta_value', 'meta_key')->all();
-        $settingArray['shop_logo'] = $imageUrl . $settingArray['shop_logo'];
+        $settingArray['shop_logo'] = $imageUrl . ($settingArray['shop_logo'] ?? '');
 
         $templateName = 'barcode-template.html'; // or get this from the request
         $templatePath = storage_path("app/public/templates/{$templateName}");
