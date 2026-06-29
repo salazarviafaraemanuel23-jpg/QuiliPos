@@ -222,8 +222,8 @@ export default function Setting({ settings }) {
         })
             .then((response) => {
                 Swal.fire({
-                    title: "Success!",
-                    text: "Successfully saved",
+                    title: "¡Éxito!",
+                    text: "Guardado exitosamente",
                     icon: "success",
                     showConfirmButton: false,
                     timer: 2000,
@@ -244,7 +244,7 @@ export default function Setting({ settings }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Settings" />
+            <Head title="Configuración" />
             <Box component="div">
                 <Box
                     sx={{
@@ -254,13 +254,13 @@ export default function Setting({ settings }) {
                     }}
                 >
                     <Tabs value={tabValue} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-                        <Tab label="SHOP" value="shop" />
-                        <Tab label="RECEIPT" value="receipt" />
-                        <Tab label="BARCODE" value="barcode" />
-                        <Tab label="CURRENCY" value="currency" />
-                        <Tab label="MISC" value="misc" />
-                        <Tab label="MODULES" value="modules" />
-                        <Tab label="MAIL" value="mail" />
+                        <Tab label="TIENDA" value="shop" />
+                        <Tab label="RECIBO" value="receipt" />
+                        <Tab label="CÓDIGO DE BARRAS" value="barcode" />
+                        <Tab label="MONEDA" value="currency" />
+                        <Tab label="VARIOS" value="misc" />
+                        <Tab label="MÓDULOS" value="modules" />
+                        <Tab label="CORREO" value="mail" />
                         <Tab label="TELEGRAM" value="telegram" />
                     </Tabs>
                 </Box>
@@ -299,7 +299,7 @@ export default function Setting({ settings }) {
                                                         backgroundOrigin: "content-box",
                                                     }}
                                                     image={settingFormData.shop_logo}
-                                                    title="shop logo"
+                                                    title="logo de tienda"
                                                 />
                                                 <CardActions className="mt-0">
                                                     <Button
@@ -310,7 +310,7 @@ export default function Setting({ settings }) {
                                                         startIcon={<CloudUploadIcon />}
                                                         fullWidth
                                                     >
-                                                        Upload shop logo
+                                                        Subir logo de tienda
                                                         <VisuallyHiddenInput
                                                             type="file"
                                                             onChange={handleFileChange}
@@ -333,7 +333,7 @@ export default function Setting({ settings }) {
                                                         backgroundOrigin: "content-box",
                                                     }}
                                                     image={settingFormData.app_icon}
-                                                    title="app icon"
+                                                    title="ícono de app"
                                                 />
                                                 <CardActions className="mt-0">
                                                     <Button
@@ -344,7 +344,7 @@ export default function Setting({ settings }) {
                                                         startIcon={<CloudUploadIcon />}
                                                         fullWidth
                                                     >
-                                                        Upload app icon
+                                                        Subir ícono de app
                                                         <VisuallyHiddenInput
                                                             type="file"
                                                             onChange={handleFileChange}
@@ -359,7 +359,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Shop name"}
+                                                label={"Nombre de tienda"}
                                                 name="shop_name"
                                                 multiline
                                                 required
@@ -381,7 +381,7 @@ export default function Setting({ settings }) {
                                         color="success"
                                         fullWidth
                                     >
-                                        UPDATE
+                                        ACTUALIZAR
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -423,7 +423,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Receipt note"}
+                                                label={"Nota del recibo"}
                                                 name="sale_receipt_note"
                                                 multiline
                                                 required
@@ -435,7 +435,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Second note"}
+                                                label={"Segunda nota"}
                                                 name="sale_receipt_second_note"
                                                 multiline
                                                 value={settingFormData.sale_receipt_second_note}
@@ -446,7 +446,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Show shopname"}
+                                                label={"Mostrar nombre de tienda"}
                                                 name="show_receipt_shop_name"
                                                 multiline
                                                 required
@@ -454,15 +454,15 @@ export default function Setting({ settings }) {
                                                 onChange={handleChange}
                                                 select
                                             >
-                                                <MenuItem value={1}>Show</MenuItem>
-                                                <MenuItem value={0}>Hide</MenuItem>
+                                                <MenuItem value={1}>Mostrar</MenuItem>
+                                                <MenuItem value={0}>Ocultar</MenuItem>
                                             </TextField>
                                         </Grid>
                                         <Grid size={{ xs: 6, sm: 3 }}>
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Padding Right"}
+                                                label={"Margen derecho"}
                                                 name="sale_print_padding_right"
                                                 multiline
                                                 required
@@ -474,7 +474,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Padding Left"}
+                                                label={"Margen izquierdo"}
                                                 name="sale_print_padding_left"
                                                 multiline
                                                 required
@@ -486,7 +486,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 name="sale_print_font"
-                                                label="Choose Font for Receipt"
+                                                label="Elegir Fuente para Recibo"
                                                 value={settingFormData.sale_print_font}
                                                 onChange={handleFontChange}
                                                 select
@@ -507,14 +507,14 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Auto Open Print Dialog"}
+                                                label={"Abrir cuadro de impresión automáticamente"}
                                                 name="auto_open_print_dialog"
                                                 required
                                                 value={settingFormData.auto_open_print_dialog}
                                                 onChange={handleChange}
                                                 select
                                             >
-                                                <MenuItem value="1">Yes</MenuItem>
+                                                <MenuItem value="1">Sí</MenuItem>
                                                 <MenuItem value="0">No</MenuItem>
                                             </TextField>
                                         </Grid>
@@ -531,7 +531,7 @@ export default function Setting({ settings }) {
                                         color="success"
                                         fullWidth
                                     >
-                                        UPDATE
+                                        ACTUALIZAR
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -561,7 +561,7 @@ export default function Setting({ settings }) {
                                 <input type="hidden" name="setting_type" value={'barcode'} />
                                 <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
                                     <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                                        Barcode Display Options
+                                        Opciones de Código de Barras
                                     </Typography>
                                     <Grid
                                         container
@@ -581,7 +581,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_store === "on"}
                                                     />
                                                 }
-                                                label="STORE NAME"
+                                                label="NOMBRE DE TIENDA"
                                             />
                                         </Grid>
                                         <Grid size={{ xs: 12, sm: 6 }}>
@@ -594,7 +594,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_product_price === "on"}
                                                     />
                                                 }
-                                                label="PRODUCT PRICE"
+                                                label="PRECIO DE PRODUCTO"
                                             />
                                         </Grid>
                                         <Grid size={{ xs: 12, sm: 6 }}>
@@ -607,7 +607,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_product_name === "on"}
                                                     />
                                                 }
-                                                label="PRODUCT NAME"
+                                                label="NOMBRE DE PRODUCTO"
                                             />
                                         </Grid>
                                     </Grid>
@@ -633,7 +633,7 @@ export default function Setting({ settings }) {
                                             size="large"
                                             color="success"
                                         >
-                                            UPDATE OPTIONS
+                                            ACTUALIZAR OPCIONES
                                         </Button>
                                     </Box>
                                 </Paper>

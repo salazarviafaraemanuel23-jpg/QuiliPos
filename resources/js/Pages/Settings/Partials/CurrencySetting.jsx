@@ -7,14 +7,14 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
     const previewNumbers = [1500, 1500.50, -1500, -1500.50];
 
     const getPreviewSettings = () => ({
-        currency_symbol: settingFormData.currency_symbol || 'Rs.',
-        currency_code: settingFormData.currency_code || 'LKR',
+        currency_symbol: settingFormData.currency_symbol || '$',
+        currency_code: settingFormData.currency_code || 'COP',
         symbol_position: settingFormData.symbol_position || 'before',
-        decimal_separator: settingFormData.decimal_separator || '.',
-        thousands_separator: settingFormData.thousands_separator || ',',
-        decimal_places: settingFormData.decimal_places || '2',
+        decimal_separator: settingFormData.decimal_separator || ',',
+        thousands_separator: settingFormData.thousands_separator || '.',
+        decimal_places: settingFormData.decimal_places || '0',
         negative_format: settingFormData.negative_format || 'minus',
-        show_currency_code: settingFormData.show_currency_code || 'no',
+        show_currency_code: settingFormData.show_currency_code || 'yes',
     });
 
     return (
@@ -51,10 +51,10 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label="Currency Symbol"
+                                    label="Símbolo de Moneda"
                                     name="currency_symbol"
                                     required
-                                    placeholder="e.g., Rs, $, €"
+                                    placeholder="ej., $, €, Rs"
                                     value={settingFormData.currency_symbol || ''}
                                     onChange={handleChange}
                                 />
@@ -64,10 +64,10 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label="Currency Code"
+                                    label="Código de Moneda"
                                     name="currency_code"
                                     required
-                                    placeholder="e.g., INR, USD, EUR"
+                                    placeholder="ej., COP, USD, EUR"
                                     value={settingFormData.currency_code || ''}
                                     onChange={handleChange}
                                 />
@@ -77,14 +77,14 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Symbol Position"
+                                    label="Posición del Símbolo"
                                     name="symbol_position"
                                     value={settingFormData.symbol_position || 'before'}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value="before">Before Amount ({settingFormData.currency_symbol || 'Rs.'} 1,500.00)</MenuItem>
-                                    <MenuItem value="after">After Amount (1,500.00 {settingFormData.currency_symbol || 'Rs.'})</MenuItem>
+                                    <MenuItem value="before">Antes del Monto ({settingFormData.currency_symbol || '$'} 1,500.00)</MenuItem>
+                                    <MenuItem value="after">Después del Monto (1,500.00 {settingFormData.currency_symbol || '$'})</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -92,14 +92,14 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Decimal Separator"
+                                    label="Separador Decimal"
                                     name="decimal_separator"
-                                    value={settingFormData.decimal_separator || '.'}
+                                    value={settingFormData.decimal_separator || ','}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value=".">Dot (1,500.00)</MenuItem>
-                                    <MenuItem value=",">Comma (1.500,00)</MenuItem>
+                                    <MenuItem value=".">Punto (1,500.00)</MenuItem>
+                                    <MenuItem value=",">Coma (1.500,00)</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -107,15 +107,15 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Thousands Separator"
+                                    label="Separador de Miles"
                                     name="thousands_separator"
-                                    value={settingFormData.thousands_separator || ','}
+                                    value={settingFormData.thousands_separator || '.'}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value=",">Comma (1,500.00)</MenuItem>
-                                    <MenuItem value=".">Dot (1.500,00)</MenuItem>
-                                    <MenuItem value=" ">Space (1 500.00)</MenuItem>
+                                    <MenuItem value=",">Coma (1,500.00)</MenuItem>
+                                    <MenuItem value=".">Punto (1.500,00)</MenuItem>
+                                    <MenuItem value=" ">Espacio (1 500.00)</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -123,15 +123,15 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Decimal Places"
+                                    label="Decimales"
                                     name="decimal_places"
-                                    value={settingFormData.decimal_places || '2'}
+                                    value={settingFormData.decimal_places || '0'}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value="0">0 ({settingFormData.currency_symbol || 'Rs.'} 1500)</MenuItem>
-                                    <MenuItem value="2">2 ({settingFormData.currency_symbol || 'Rs.'} 1500.00)</MenuItem>
-                                    <MenuItem value="3">3 ({settingFormData.currency_symbol || 'Rs.'} 1500.000)</MenuItem>
+                                    <MenuItem value="0">0 ({settingFormData.currency_symbol || '$'} 1500)</MenuItem>
+                                    <MenuItem value="2">2 ({settingFormData.currency_symbol || '$'} 1500.00)</MenuItem>
+                                    <MenuItem value="3">3 ({settingFormData.currency_symbol || '$'} 1500.000)</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -139,14 +139,14 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Negative Number Format"
+                                    label="Formato de Números Negativos"
                                     name="negative_format"
                                     value={settingFormData.negative_format || 'minus'}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value="minus">With Minus Sign (-{settingFormData.currency_symbol || 'Rs.'} 1,500.00)</MenuItem>
-                                    <MenuItem value="parentheses">Parentheses (({settingFormData.currency_symbol || 'Rs.'} 1,500.00))</MenuItem>
+                                    <MenuItem value="minus">Con Signo Menos (-{settingFormData.currency_symbol || '$'} 1,500.00)</MenuItem>
+                                    <MenuItem value="parentheses">Paréntesis (({settingFormData.currency_symbol || '$'} 1,500.00))</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -154,14 +154,14 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                 <TextField
                                     fullWidth
                                     select
-                                    label="Show Currency Code"
+                                    label="Mostrar Código de Moneda"
                                     name="show_currency_code"
-                                    value={settingFormData.show_currency_code || 'no'}
+                                    value={settingFormData.show_currency_code || 'yes'}
                                     onChange={handleChange}
                                     variant="outlined"
                                 >
-                                    <MenuItem value="yes">Yes ({settingFormData.currency_symbol || 'Rs.'} ({settingFormData.currency_code || 'LKR'}) 1,500.00)</MenuItem>
-                                    <MenuItem value="no">No ({settingFormData.currency_symbol || 'Rs.'} 1,500.00)</MenuItem>
+                                    <MenuItem value="yes">Sí ({settingFormData.currency_symbol || '$'} ({settingFormData.currency_code || 'COP'}) 1,500.00)</MenuItem>
+                                    <MenuItem value="no">No ({settingFormData.currency_symbol || '$'} 1,500.00)</MenuItem>
                                 </TextField>
                             </Grid>
                         </Grid>
@@ -178,7 +178,7 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                             color="success"
                             fullWidth
                         >
-                            UPDATE CURRENCY SETTINGS
+                            ACTUALIZAR CONFIGURACIÓN DE MONEDA
                         </Button>
                     </Grid>
 
@@ -186,7 +186,7 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                     <Grid size={12}>
                         <Paper elevation={3} sx={{ padding: 3, marginTop: 3, width: '100%', backgroundColor: '#f5f5f5' }}>
                             <Typography variant="h6" sx={{ marginBottom: 2, fontWeight: 'bold' }}>
-                                Format Preview
+                                Vista Previa del Formato
                             </Typography>
                             <Grid container spacing={2}>
                                 {previewNumbers.map((num, index) => (
@@ -198,7 +198,7 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                                             border: '1px solid #ddd'
                                         }}>
                                             <Typography sx={{ fontSize: '0.85rem', color: '#666' }}>
-                                                {num < 0 ? 'Negative' : 'Positive'}
+                                                {num < 0 ? 'Negativo' : 'Positivo'}
                                             </Typography>
                                             <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: num < 0 ? '#d32f2f' : '#388e3c' }}>
                                                 {formatCurrency(num, getPreviewSettings())}

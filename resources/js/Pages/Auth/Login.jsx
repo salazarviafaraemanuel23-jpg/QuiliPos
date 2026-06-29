@@ -25,13 +25,13 @@ export default function Login({ status, canResetPassword, version }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="Iniciar Sesión" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email or User name" />
+                    <InputLabel htmlFor="email" value="Correo o Nombre de usuario" />
 
                     <TextInput
                         id="email"
@@ -48,7 +48,7 @@ export default function Login({ status, canResetPassword, version }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Contraseña" />
 
                     <TextInput
                         id="password"
@@ -69,7 +69,7 @@ export default function Login({ status, canResetPassword, version }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ms-2 text-sm text-gray-600">Recordarme</span>
                     </label>
                 </div>
 
@@ -79,12 +79,12 @@ export default function Login({ status, canResetPassword, version }) {
                             href={route('password.request')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Forgot your password?
+                            ¿Olvidó su contraseña?
                         </Link>
                     )}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
+                        Ingresar
                     </PrimaryButton>
                 </div>
             </form>
