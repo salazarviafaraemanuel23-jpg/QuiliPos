@@ -55,8 +55,8 @@ class HandleInertiaRequests extends Middleware
 
             $modules = Setting::getModules();
             $shopName = $shopNameMeta->meta_value ?? 'QuiliPos';
-        } catch (\Exception $e) {
-            // If settings table doesn't exist, use defaults
+        } catch (\Throwable $e) {
+        // If settings table doesn't exist, use defaults
             $currencySettings = [];
             $modules = [];
             $shopName = 'QuiliPos';

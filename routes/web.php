@@ -41,6 +41,8 @@ require __DIR__ . '/installer.php';
 
 // One-time deploy bootstrap (migrations + seeders) — protected by DEPLOY_SETUP_TOKEN
 Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
+    config(['cache.default' => 'array']);
+
     $expected = (string) env('DEPLOY_SETUP_TOKEN');
     $provided = (string) ($request->header('X-Deploy-Token') ?? $request->query('token'));
 
@@ -78,7 +80,9 @@ Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
             'line' => $e->getLine(),
         ], 500);
     }
-});
+})->withoutMiddleware([
+    \App\Http\Middleware\HandleInertiaRequests::class,
+]);
 
 Route::get('/', function () {
     return redirect('login');
