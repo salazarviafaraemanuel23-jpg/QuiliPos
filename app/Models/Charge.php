@@ -21,6 +21,7 @@ class Charge extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_default' => 'boolean',
         'rate_value' => 'decimal:2',
     ];
 
