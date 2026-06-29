@@ -18,13 +18,15 @@ class DatabaseSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // ── Store ────────────────────────────────────────────────────────────
-        Store::create([
-            'name'                => 'QuiliPos Demo',
-            'address'             => '42 Galle Road, Colombo 03, Sri Lanka',
-            'contact_number'      => '0112345678',
-            'sale_prefix'         => 'IS',
-            'current_sale_number' => 0,
-        ]);
+        Store::firstOrCreate(
+            ['name' => 'QuiliPos Demo'],
+            [
+                'address'             => '42 Galle Road, Colombo 03, Sri Lanka',
+                'contact_number'      => '0112345678',
+                'sale_prefix'         => 'IS',
+                'current_sale_number' => 0,
+            ]
+        );
 
         // ── Permissions ──────────────────────────────────────────────────────
         $permissions = [
@@ -52,37 +54,43 @@ class DatabaseSeeder extends Seeder
 
         // ── Users ─────────────────────────────────────────────────────────────
         // Both user_role (display/filter column) and Spatie assignRole() must be set
-        $superAdmin = User::create([
-            'name'      => 'Super Admin',
-            'user_name' => 'superadmin',
-            'user_role' => 'super-admin',   // display column
-            'email'     => 'superadmin@demo.com',
-            'store_id'  => 1,
-            'password'  => Hash::make('superadmin'),
-            'is_active' => true,
-        ]);
-        $superAdmin->assignRole($superAdminRole); // Spatie model_has_roles
+        $superAdmin = User::updateOrCreate(
+            ['email' => 'superadmin@demo.com'],
+            [
+                'name'      => 'Super Admin',
+                'user_name' => 'superadmin',
+                'user_role' => 'super-admin',
+                'store_id'  => 1,
+                'password'  => Hash::make('superadmin'),
+                'is_active' => true,
+            ]
+        );
+        $superAdmin->assignRole($superAdminRole);
 
-        $admin = User::create([
-            'name'      => 'Admin User',
-            'user_name' => 'admin',
-            'user_role' => 'admin',
-            'email'     => 'admin@demo.com',
-            'store_id'  => 1,
-            'password'  => Hash::make('admin123'),
-            'is_active' => true,
-        ]);
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@demo.com'],
+            [
+                'name'      => 'Admin User',
+                'user_name' => 'admin',
+                'user_role' => 'admin',
+                'store_id'  => 1,
+                'password'  => Hash::make('admin123'),
+                'is_active' => true,
+            ]
+        );
         $admin->assignRole($adminRole);
 
-        $cashier = User::create([
-            'name'      => 'Cashier',
-            'user_name' => 'cashier',
-            'user_role' => 'user',
-            'email'     => 'cashier@demo.com',
-            'store_id'  => 1,
-            'password'  => Hash::make('cashier123'),
-            'is_active' => true,
-        ]);
+        $cashier = User::updateOrCreate(
+            ['email' => 'cashier@demo.com'],
+            [
+                'name'      => 'Cashier',
+                'user_name' => 'cashier',
+                'user_role' => 'user',
+                'store_id'  => 1,
+                'password'  => Hash::make('cashier123'),
+                'is_active' => true,
+            ]
+        );
         $cashier->assignRole($userRole);
 
         // Final cache reset so the app sees all roles/permissions immediately

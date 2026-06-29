@@ -34,7 +34,10 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'meta_data' => 'array', // Ensure the meta_data column is treated as an array
+        'meta_data' => 'array',
+        'is_stock_managed' => 'boolean',
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
     ];
 
     public function batches()
