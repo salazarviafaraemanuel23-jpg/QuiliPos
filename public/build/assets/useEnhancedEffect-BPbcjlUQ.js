@@ -1,0 +1,1 @@
+import{a as e}from"./useReducedMotion-C2RCxVR3.js";var t=e;export{t};

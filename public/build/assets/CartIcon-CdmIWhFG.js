@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DVpe7PXp.js";import{t}from"./Badge-Dd6MtdFh.js";import{n}from"./SalesContext-B1h6gZps.js";import{t as r}from"./ShoppingCart-D1ue73Z0.js";var i=e();function a(){let{cartState:e,cartTotal:a,totalQuantity:o}=n();return(0,i.jsx)(t,{badgeContent:e.length,color:`error`,children:(0,i.jsx)(r,{})})}export{a as default};

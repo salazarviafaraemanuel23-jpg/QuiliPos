@@ -1,0 +1,1 @@
+var e=`/build/assets/quilipos-Do26TR9A.png`;export{e as t};

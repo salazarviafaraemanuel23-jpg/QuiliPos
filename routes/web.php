@@ -39,6 +39,28 @@ use App\Http\Controllers\SyncController;
 // Installer routes (must be before auth routes)
 require __DIR__ . '/installer.php';
 
+// One-time deploy bootstrap (migrations + seeders) — protected by DEPLOY_SETUP_TOKEN
+Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
+    $expected = (string) env('DEPLOY_SETUP_TOKEN');
+    $provided = (string) ($request->header('X-Deploy-Token') ?? $request->query('token'));
+
+    if ($expected === '' || ! hash_equals($expected, $provided)) {
+        abort(404);
+    }
+
+    Artisan::call('migrate', ['--force' => true]);
+    $migrateOutput = Artisan::output();
+
+    Artisan::call('db:seed', ['--force' => true]);
+    $seedOutput = Artisan::output();
+
+    return response()->json([
+        'status' => 'ok',
+        'migrate' => trim($migrateOutput),
+        'seed' => trim($seedOutput),
+    ]);
+})->middleware('throttle:3,1');
+
 Route::get('/', function () {
     return redirect('login');
 });

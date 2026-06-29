@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DVpe7PXp.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:(0,t.jsx)(`h1`,{children:`CartSummary`})});export{n as default};

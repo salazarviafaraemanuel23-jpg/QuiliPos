@@ -1,0 +1,1 @@
+import{E as e,b as t,x as n}from"./utils-DU-cbQBf.js";var r=n();function i(e){let{theme:n,name:r,props:i}=e;return!n||!n.components||!n.components[r]||!n.components[r].defaultProps?i:t(n.components[r].defaultProps,i)}function a({props:t,name:n,defaultTheme:r,themeId:a}){let o=e(r);return a&&(o=o[a]||o),i({theme:o,name:n,props:t})}export{i as n,r,a as t};

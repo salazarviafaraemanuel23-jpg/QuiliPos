@@ -1,0 +1,1 @@
+import{o as e}from"./jsx-runtime-DVpe7PXp.js";import{t}from"./react-ByFLoWig.js";var n=e(t(),1).createContext({});export{n as t};

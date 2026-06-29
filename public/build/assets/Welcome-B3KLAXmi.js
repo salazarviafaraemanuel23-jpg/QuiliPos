@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DVpe7PXp.js";import{a as t}from"./app-BlIO4nyc.js";import"./GuestLayout-CiwUnymN.js";var n=e();function r({auth:e}){return(0,n.jsx)(n.Fragment,{children:(0,n.jsx)(t,{title:`Welcome`})})}export{r as default};
