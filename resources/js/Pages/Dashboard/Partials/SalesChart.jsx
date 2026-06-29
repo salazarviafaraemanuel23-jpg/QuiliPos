@@ -28,14 +28,14 @@ export const description = "An interactive area chart"
 
 const chartConfig = {
   visitors: {
-    label: "Sales",
+    label: "Ventas",
   },
   sale: {
-    label: "Sales",
+    label: "Ventas",
     color: "var(--chart-2)",
   },
   cash: {
-    label: "Cash",
+    label: "Caja/Efectivo",
     color: "var(--chart-4)",
   },
 }
@@ -63,9 +63,9 @@ export function SalesChart() {
     <Card className="pt-0 w-full h-full">
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1">
-          <CardTitle>SALES</CardTitle>
+          <CardTitle>VENTAS</CardTitle>
           <CardDescription>
-            Showing total sales for the last 3 months
+            Mostrando total de ventas de los últimos 3 meses
           </CardDescription>
         </div>
         <Select value={timeRange} onValueChange={setTimeRange}>
@@ -73,17 +73,17 @@ export function SalesChart() {
             className="hidden w-[160px] rounded-lg sm:ml-auto sm:flex"
             aria-label="Select a value"
           >
-            <SelectValue placeholder="Last 3 months" />
+            <SelectValue placeholder="Últimos 3 meses" />
           </SelectTrigger>
           <SelectContent className="rounded-xl bg-white">
             <SelectItem value="90d" className="rounded-lg">
-              Last 3 months
+              Últimos 3 meses
             </SelectItem>
             <SelectItem value="30d" className="rounded-lg">
-              Last 30 days
+              Últimos 30 días
             </SelectItem>
             <SelectItem value="7d" className="rounded-lg">
-              Last 7 days
+              Últimos 7 días
             </SelectItem>
           </SelectContent>
         </Select>
@@ -129,7 +129,7 @@ export function SalesChart() {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
+                return date.toLocaleDateString("es-CO", {
                   month: "short",
                   day: "numeric",
                 })
@@ -147,7 +147,7 @@ export function SalesChart() {
                 <ChartTooltipContent
                 className="bg-white"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    return new Date(value).toLocaleDateString("es-CO", {
                       month: "short",
                       day: "numeric",
                     })

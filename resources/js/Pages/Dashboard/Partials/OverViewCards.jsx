@@ -21,21 +21,21 @@ export function OverViewCards() {
                     <Card className="bg-blue-300 text-blue-950">
                         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                             <CardTitle className='text-sm font-medium'>
-                                Total Items
+                                Artículos Totales
                             </CardTitle>
                             <Package />
                         </CardHeader>
                         <CardContent>
                             <div className='text-2xl font-bold'>{data.totalItems}</div>
                             <p className='text-muted-foreground text-xs'>
-                                {data.totalQuantities} QTY
+                                {data.totalQuantities} CANT
                             </p>
                         </CardContent>
                     </Card>
                     <Card className="bg-yellow-200 text-yellow-900">
                         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                             <CardTitle className='text-sm font-medium'>
-                                Total valuation
+                                Valoración Total
                             </CardTitle>
                             <ChartLine />
                         </CardHeader>
@@ -48,7 +48,7 @@ export function OverViewCards() {
                     </Card>
                     <Card className="bg-green-300 text-green-950 cursor-pointer" onClick={() => window.location.href = route('sales.items.summary')}>
                         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                            <CardTitle className='text-sm font-medium'>Sold Items</CardTitle>
+                            <CardTitle className='text-sm font-medium'>Artículos Vendidos</CardTitle>
                             <PackageCheck />
                         </CardHeader>
                         <CardContent>
@@ -61,7 +61,7 @@ export function OverViewCards() {
                     <Card className="bg-red-300 text-red-950">
                         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                             <CardTitle className='text-sm font-medium'>
-                                Customer balance
+                                Saldo de Clientes
                             </CardTitle>
                             <User />
                         </CardHeader>

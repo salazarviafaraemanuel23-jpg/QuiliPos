@@ -51,7 +51,7 @@ export default function Summaries() {
     }, [startDate, endDate]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>Cargando...</div>;
     }
 
     return (
@@ -60,9 +60,9 @@ export default function Summaries() {
                 <Grid container spacing={2} size={12}>
                     <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                         <TextField
-                            label="Start Date"
-                            name="start_date"
-                            placeholder="Start Date"
+                             label="Fecha Inicio"
+                             name="start_date"
+                             placeholder="Fecha Inicio"
                             type="date"
                             fullWidth
                             slotProps={{
@@ -78,9 +78,9 @@ export default function Summaries() {
                     </Grid>
                     <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                         <TextField
-                            label="End Date"
-                            name="end_date"
-                            placeholder="End Date"
+                             label="Fecha Fin"
+                             name="end_date"
+                             placeholder="Fecha Fin"
                             type="date"
                             fullWidth
                             slotProps={{
@@ -103,8 +103,8 @@ export default function Summaries() {
                             <Table sx={{ minWidth: 300 }}>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell><strong>Top Sold Items</strong></TableCell>
-                                        <TableCell align="right">Quantity</TableCell>
+                                         <TableCell><strong>Artículos Más Vendidos</strong></TableCell>
+                                         <TableCell align="right">Cantidad</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -123,8 +123,8 @@ export default function Summaries() {
                             <Table sx={{ minWidth: 300 }}>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell><strong>Top Profit Items</strong></TableCell>
-                                        <TableCell align="right">Profit</TableCell>
+                                         <TableCell><strong>Más Lucrativos</strong></TableCell>
+                                         <TableCell align="right">Ganancia</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -143,8 +143,8 @@ export default function Summaries() {
                             <Table sx={{ minWidth: 300 }}>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell><strong>Top Gross Items</strong></TableCell>
-                                        <TableCell align="right">Gross</TableCell>
+                                         <TableCell><strong>Mayor Ingreso Bruto</strong></TableCell>
+                                         <TableCell align="right">Ingreso Bruto</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

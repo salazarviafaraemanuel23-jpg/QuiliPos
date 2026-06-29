@@ -72,11 +72,11 @@ export default function Dashboard({ data, logo, version, store_name }) {
         <AuthenticatedLayout
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    Panel de Control
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Panel de Control" />
 
             {(auth.user_role == "admin" || auth.user_role == "super-admin") && (
 
@@ -84,28 +84,28 @@ export default function Dashboard({ data, logo, version, store_name }) {
                     {parseFloat(data.lowStock) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/products?status=alert&per_page=" + parseInt(data.lowStock)}>
-                                <Alert severity="warning"><strong>{data.lowStock}</strong> Alert Products</Alert>
+                                <Alert severity="warning"><strong>{data.lowStock}</strong> Productos en Alerta</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.outOfStock) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/products?status=out_of_stock&per_page=" + parseInt(data.outOfStock)}>
-                                <Alert severity="error"><strong>{data.outOfStock}</strong> Out of Stocks</Alert>
+                                <Alert severity="error"><strong>{data.outOfStock}</strong> Sin Stock / Agotados</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.pending_cheque_count) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/cheques?status=pending&per_page=" + parseInt(data.pending_cheque_count)}>
-                                <Alert severity="primary"><strong>{data.pending_cheque_count}</strong> Pending Cheque/s</Alert>
+                                <Alert severity="primary"><strong>{data.pending_cheque_count}</strong> Cheque(s) Pendiente(s)</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.cheque_alert_count) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={`/cheques?status=alert&per_page=${parseInt(data.cheque_alert_count)}`}>
-                                <Alert severity="error"><strong>{data.cheque_alert_count}</strong> Alert Cheque/s</Alert>
+                                <Alert severity="error"><strong>{data.cheque_alert_count}</strong> Cheque(s) en Alerta</Alert>
                             </Link>
                         </Grid>
                     )}
@@ -132,10 +132,10 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                     sx={{ display: "flex", width: "100%" }}
                                 >
                                     <Grid size={6}>
-                                        <MUIDatePicker name="start_date" label="Start Date" value={startDate} onChange={setStartDate} />
+                                        <MUIDatePicker name="start_date" label="Fecha Inicio" value={startDate} onChange={setStartDate} />
                                     </Grid>
                                     <Grid size={6}>
-                                        <MUIDatePicker name="end_date" label="End Date" value={endDate} onChange={setEndDate} />
+                                        <MUIDatePicker name="end_date" label="Fecha Fin" value={endDate} onChange={setEndDate} />
                                     </Grid>
                                 </Grid>
 
@@ -150,7 +150,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <PaidIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Sales" />
+                                                <ListItemText primary="Ventas" />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -165,7 +165,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <PaymentsIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Cash" />
+                                                <ListItemText primary="Efectivo" />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -182,7 +182,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                         <ListItemIcon>
                                                             <ShoppingCartCheckoutIcon />
                                                         </ListItemIcon>
-                                                        <ListItemText primary="Inventory Purchase" />
+                                                        <ListItemText primary="Compra de Inventario" />
                                                     </ListItemButton>
                                                 </ListItem>
                                             </Link>
@@ -199,7 +199,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <AccountBalanceWalletIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Expenses" />
+                                                <ListItemText primary="Gastos" />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -207,7 +207,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                     <Divider />
                                     <Link href="/reports/summary-report">
                                         <ListItem>
-                                            <ListItemText sx={{ textAlign: 'center', color: '#1976d2', textDecoration: 'underline' }} primary="VIEW SUMMARY" />
+                                            <ListItemText sx={{ textAlign: 'center', color: '#1976d2', textDecoration: 'underline' }} primary="VER RESUMEN" />
                                         </ListItem>
                                     </Link>
                                 </List>
@@ -230,28 +230,28 @@ export default function Dashboard({ data, logo, version, store_name }) {
             <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'fixed', backgroundColor: '#c9c9c9', bottom: '2px', right: '6px', padding: '10px', paddingRight: 2 }}>
                 <Grid container spacing={1} sx={{ alignItems: 'center' }}>
                     <Grid>
-                        <a href="/clear-cache" title="Refresh cache">
+                        <a href="/clear-cache" title="Refrescar caché">
                             <IconButton>
                                 <RefreshIcon />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        <a href="/backup-now" title="Backup now" target="_blank">
+                        <a href="/backup-now" title="Crear copia de seguridad" target="_blank">
                             <IconButton>
                                 <DatabaseBackup />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        <a href="/maintenance" title="Maintenance">
+                        <a href="/maintenance" title="Mantenimiento">
                             <IconButton>
                                 <BuildIcon />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        VERSION {version}
+                        VERSIÓN {version}
                     </Grid>
                 </Grid>
             </Box>
