@@ -68,7 +68,7 @@ Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
             'line' => $e->getLine(),
         ], 500);
     }
-})->middleware('throttle:3,1');
+});
 
 Route::get('/', function () {
     return redirect('login');
