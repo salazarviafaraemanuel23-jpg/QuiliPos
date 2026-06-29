@@ -48,17 +48,26 @@ Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
         abort(404);
     }
 
-    Artisan::call('migrate', ['--force' => true]);
-    $migrateOutput = Artisan::output();
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = Artisan::output();
 
-    Artisan::call('db:seed', ['--force' => true]);
-    $seedOutput = Artisan::output();
+        Artisan::call('db:seed', ['--force' => true]);
+        $seedOutput = Artisan::output();
 
-    return response()->json([
-        'status' => 'ok',
-        'migrate' => trim($migrateOutput),
-        'seed' => trim($seedOutput),
-    ]);
+        return response()->json([
+            'status' => 'ok',
+            'migrate' => trim($migrateOutput),
+            'seed' => trim($seedOutput),
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ], 500);
+    }
 })->middleware('throttle:3,1');
 
 Route::get('/', function () {
