@@ -47,13 +47,13 @@ class ReportController extends Controller
                 'transactions.sales_id',
                 DB::raw('CASE WHEN cash_logs.amount > 0 THEN cash_logs.amount ELSE 0 END AS cash_in'),
                 DB::raw('CASE WHEN cash_logs.amount < 0 THEN ABS(cash_logs.amount) ELSE 0 END AS cash_out'),
-                DB::raw('
+                DB::raw("
                     CASE 
-                        WHEN cash_logs.source = "sales" THEN transactions.transaction_type 
-                        WHEN cash_logs.source = "purchases" THEN purchase_transactions.transaction_type 
+                        WHEN cash_logs.source = 'sales' THEN transactions.transaction_type 
+                        WHEN cash_logs.source = 'purchases' THEN purchase_transactions.transaction_type 
                         ELSE NULL 
                     END AS transaction_type
-                ')
+                ")
             )
             ->leftJoin('contacts', 'cash_logs.contact_id', '=', 'contacts.id')
             ->leftJoin('transactions', function ($join) {

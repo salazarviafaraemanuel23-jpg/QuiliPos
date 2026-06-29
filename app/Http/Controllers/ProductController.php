@@ -37,7 +37,7 @@ class ProductController extends Controller
             'products.barcode',
             DB::raw("COALESCE(products.sku, 'N/A') AS sku"),
             DB::raw("COALESCE(product_batches.batch_number, 'N/A') AS batch_number"),
-            DB::raw("COALESCE(product_batches.expiry_date, 'N/A') AS expiry_date"),
+            DB::raw("COALESCE(CAST(product_batches.expiry_date AS varchar), 'N/A') AS expiry_date"),
             'product_batches.cost',
             'product_batches.price',
             'product_batches.is_active',

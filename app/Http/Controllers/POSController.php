@@ -70,25 +70,9 @@ class POSController extends Controller
             $query->where('pb.is_featured', 1);
         }
 
-        $productsQuery = $query->groupBy(
-            'products.id',
-            'products.image_url',
-            'products.name',
-            'products.discount',
-            'products.is_stock_managed',
-            DB::raw("COALESCE(pb.batch_number, 'N/A')"),
-            'pb.cost',
-            'pb.price',
-            'pb.id',
-            'product_stocks.quantity',
-            'products.product_type',
-            'products.meta_data',
-            'products.alert_quantity',
-            'pb.discount',
-            'pb.discount_percentage'
-        );
+        $productsQuery = $query;
 
-        if (!isset($allProducts)) {
+        if (!isset($allProducts) || !$allProducts) {
             $productsQuery->limit(20);
         }
 
@@ -138,7 +122,7 @@ class POSController extends Controller
             return redirect()->route('store'); // Adjust the route name as necessary
         }
         $categories = Collection::where('collection_type', 'category')->get();
-        $allCollections = Collection::orderByRaw('CASE WHEN collection_type = "category" THEN 1 WHEN collection_type = "brand" THEN 2 WHEN collection_type = "tag" THEN 3 ELSE 4 END, parent_id IS NULL DESC, name ASC')
+        $allCollections = Collection::orderByRaw("CASE WHEN collection_type = 'category' THEN 1 WHEN collection_type = 'brand' THEN 2 WHEN collection_type = 'tag' THEN 3 ELSE 4 END, parent_id IS NULL DESC, name ASC")
             ->with('children')
             ->get();
         $products = $this->getProducts();
@@ -185,7 +169,7 @@ class POSController extends Controller
         $currentStore = Store::find($sale->store_id);
 
         $categories = Collection::where('collection_type', 'category')->get();
-        $allCollections = Collection::orderByRaw('CASE WHEN collection_type = "category" THEN 1 WHEN collection_type = "brand" THEN 2 WHEN collection_type = "tag" THEN 3 ELSE 4 END, parent_id IS NULL DESC, name ASC')
+        $allCollections = Collection::orderByRaw("CASE WHEN collection_type = 'category' THEN 1 WHEN collection_type = 'brand' THEN 2 WHEN collection_type = 'tag' THEN 3 ELSE 4 END, parent_id IS NULL DESC, name ASC")
             ->with('children')
             ->get();
         $products = $this->getProducts();
@@ -266,21 +250,6 @@ class POSController extends Controller
             })
             ->leftJoin('product_batches AS pb', 'products.id', '=', 'pb.product_id') // Join with product_batches using product_id
             ->leftJoin('product_stocks AS ps', 'pb.id', '=', 'si.batch_id') // Join with product_stocks using batch_id
-
-            ->groupBy(
-                'products.id',
-                'products.image_url',
-                'products.name',
-                'si.discount',
-                'products.is_stock_managed',
-                DB::raw("COALESCE(pb.batch_number, 'N/A')"),
-                'si.unit_cost',
-                'si.unit_price',
-                'si.batch_id',
-                'si.quantity',
-                'products.product_type',
-                'products.meta_data'
-            )
             ->get();
 
         // Convert image_url to proper storage URLs
