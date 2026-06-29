@@ -49,14 +49,24 @@ Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
     }
 
     try {
-        Artisan::call('migrate', ['--force' => true]);
-        $migrateOutput = Artisan::output();
+        $step = $request->query('step', 'all');
 
-        Artisan::call('db:seed', ['--force' => true]);
-        $seedOutput = Artisan::output();
+        $migrateOutput = '';
+        $seedOutput = '';
+
+        if (in_array($step, ['all', 'migrate'], true)) {
+            Artisan::call('migrate', ['--force' => true]);
+            $migrateOutput = Artisan::output();
+        }
+
+        if (in_array($step, ['all', 'seed'], true)) {
+            Artisan::call('db:seed', ['--force' => true]);
+            $seedOutput = Artisan::output();
+        }
 
         return response()->json([
             'status' => 'ok',
+            'step' => $step,
             'migrate' => trim($migrateOutput),
             'seed' => trim($seedOutput),
         ]);

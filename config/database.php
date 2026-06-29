@@ -5,8 +5,14 @@ use Illuminate\Support\Str;
 $databaseUrl = env('DATABASE_URL', env('DB_URL'));
 
 if ($databaseUrl && str_contains($databaseUrl, 'neon.tech') && ! str_contains($databaseUrl, 'endpoint%3D') && ! str_contains($databaseUrl, 'endpoint=')) {
-    $host = parse_url($databaseUrl, PHP_URL_HOST) ?? '';
+    $host = parse_url(str_replace('postgresql://', 'postgres://', $databaseUrl), PHP_URL_HOST) ?? '';
+
+    if ($host === '' && preg_match('#@([^/?]+)#', $databaseUrl, $matches)) {
+        $host = $matches[1];
+    }
+
     $endpointId = explode('.', $host)[0] ?? '';
+    $endpointId = preg_replace('/-pooler$/', '', $endpointId);
 
     if ($endpointId !== '') {
         $separator = str_contains($databaseUrl, '?') ? '&' : '?';
