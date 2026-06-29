@@ -1,0 +1,19 @@
+<?php
+
+use App\Http\Controllers\InstallerController;
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('install')->name('installer.')->middleware(['web'])->group(function () {
+    Route::get('/', [InstallerController::class, 'welcome'])->name('welcome');
+    Route::get('/requirements', [InstallerController::class, 'requirements'])->name('requirements');
+    Route::get('/database', [InstallerController::class, 'database'])->name('database');
+    Route::post('/database/test', [InstallerController::class, 'testDatabase'])->name('database.test');
+    Route::post('/database/save', [InstallerController::class, 'saveDatabase'])->name('database.save');
+    Route::get('/settings', [InstallerController::class, 'settings'])->name('settings');
+    Route::post('/settings/save', [InstallerController::class, 'saveSettings'])->name('settings.save');
+    Route::get('/store', [InstallerController::class, 'store'])->name('store');
+    Route::get('/admin', [InstallerController::class, 'admin'])->name('admin');
+    Route::get('/install', [InstallerController::class, 'install'])->name('install');
+    Route::post('/process', [InstallerController::class, 'processInstallation'])->name('process');
+    Route::get('/complete', [InstallerController::class, 'complete'])->name('complete');
+});
