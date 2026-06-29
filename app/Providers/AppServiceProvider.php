@@ -40,27 +40,7 @@ class AppServiceProvider extends ServiceProvider
             return $user && $user->hasRole('super-admin');
         });
 
-        // Load mail settings from database (if table exists)
-        // Skip during console commands and if table doesn't exist yet
-        try {
-            if (!App::runningInConsole() && Schema::hasTable('settings')) {
-                $mailSetting = Setting::where('meta_key', 'mail_settings')->first();
-
-                if ($mailSetting) {
-                    $mailSettings = json_decode($mailSetting->meta_value);
-                    Config::set(['mail.driver' => 'smtp']);
-                    Config::set(['mail.host' => $mailSettings->mail_host]);
-                    Config::set(['mail.port' => $mailSettings->mail_port]);
-                    Config::set(['mail.username' => $mailSettings->mail_username]);
-                    Config::set(['mail.password' => $mailSettings->mail_password]);
-                    Config::set(['mail.encryption' => $mailSettings->mail_encryption]);
-                    Config::set(['mail.from.address' => $mailSettings->mail_from_address]);
-                    Config::set(['mail.from.name' => $mailSettings->mail_from_name]);
-                }
-            }
-        } catch (\Exception $e) {
-            // Silently fail if settings table doesn't exist (e.g., during fresh installation)
-            \Illuminate\Support\Facades\Log::debug('Settings table not available: ' . $e->getMessage());
-        }
+        // Mail settings are loaded lazily when needed — avoid DB calls during
+        // serverless cold starts before migrations have run.
     }
 }
