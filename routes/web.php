@@ -61,9 +61,26 @@ Route::match(['get', 'post'], '/deploy/setup', function (Request $request) {
             $migrateOutput = Artisan::output();
         }
 
-        if (in_array($step, ['all', 'seed'], true)) {
-            Artisan::call('db:seed', ['--force' => true]);
-            $seedOutput = Artisan::output();
+        if (in_array($step, ['all', 'seed', 'seed-core'], true)) {
+            Artisan::call('db:seed', [
+                '--class' => 'Database\\Seeders\\CoreDatabaseSeeder',
+                '--force' => true,
+            ]);
+            $seedOutput .= Artisan::output();
+        }
+
+        if (in_array($step, ['all', 'seed-demo'], true)) {
+            Artisan::call('db:seed', [
+                '--class' => 'Database\\Seeders\\DemoDataSeeder',
+                '--force' => true,
+            ]);
+            $seedOutput .= Artisan::output();
+        }
+
+        if (str_starts_with($step, 'seed-') && ! in_array($step, ['seed-core', 'seed-demo'], true)) {
+            $class = str($step)->after('seed-')->studly()->prepend('Database\\Seeders\\')->append('Seeder')->toString();
+            Artisan::call('db:seed', ['--class' => $class, '--force' => true]);
+            $seedOutput .= Artisan::output();
         }
 
         return response()->json([
