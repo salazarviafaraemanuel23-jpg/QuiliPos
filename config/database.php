@@ -134,7 +134,8 @@ return [
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'require'),
             'options' => extension_loaded('pdo_pgsql') ? array_filter([
-                PDO::ATTR_EMULATE_PREPARES => true,
+                // Native prepares required so PostgreSQL receives true/false, not 1/0
+                PDO::ATTR_EMULATE_PREPARES => false,
             ]) : [],
         ], $pgsqlFromUrl),
 
