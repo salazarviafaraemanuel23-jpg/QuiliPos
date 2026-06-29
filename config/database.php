@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Str;
 
+$databaseUrl = env('DATABASE_URL', env('DB_URL'));
+
+if ($databaseUrl && str_contains($databaseUrl, 'neon.tech') && ! str_contains($databaseUrl, 'endpoint%3D') && ! str_contains($databaseUrl, 'endpoint=')) {
+    $host = parse_url($databaseUrl, PHP_URL_HOST) ?? '';
+    $endpointId = explode('.', $host)[0] ?? '';
+
+    if ($endpointId !== '') {
+        $separator = str_contains($databaseUrl, '?') ? '&' : '?';
+        $databaseUrl .= $separator.'options=endpoint%3D'.rawurlencode($endpointId);
+    }
+}
+
 return [
 
     /*
@@ -67,7 +79,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL', env('DB_URL')),
+            'url' => $databaseUrl,
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'laravel'),
