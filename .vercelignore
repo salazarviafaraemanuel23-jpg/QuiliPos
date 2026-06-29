@@ -13,3 +13,4 @@ storage/framework/views/*
 Homestead.json
 Homestead.yaml
 public/hot
+vendor
